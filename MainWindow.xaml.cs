@@ -34,15 +34,32 @@ namespace Mortgage_Repayment_Calculator
             {
                 double MonthlyPaymentDouble = InterestOnly(Capital, MonthlyDecimalInterestRate);
                 string MonthlyPaymentString = MonthlyPaymentDouble.ToString();
-                string message = "Your Monthly Payment is: " + MonthlyPaymentString;
+                string message = "Your Monthly Payment is: £" + MonthlyPaymentString;
                 System.Windows.MessageBox.Show(message);
+                double TotalInterestPaymentDouble = (MonthlyPaymentDouble * TermMonths);
+                double TotalPaymentDouble = TotalInterestPaymentDouble + Capital;
+                string TotalInterestPaymentString = TotalInterestPaymentDouble.ToString();
+                string TotalPaymentString = TotalPaymentDouble.ToString();
+                string message2 = "Over the lifetime of the mortgage you will repay £" + TotalPaymentString + ", of that £" + TotalInterestPaymentString + " is interest.";
+                System.Windows.MessageBox.Show(message2);
+
             }
             else if (CapitalRepaymentRadio.IsChecked == true)
             {
                 double MonthlyPaymentDouble = CapitalRepay(Capital, MonthlyDecimalInterestRate, TermMonths);
                 string MonthlyPaymentString = MonthlyPaymentDouble.ToString();
-                string message = "Your Monthly Repayment is: " + MonthlyPaymentString;
+                string message = "Your Monthly Repayment is: £" + MonthlyPaymentString;
                 System.Windows.MessageBox.Show(message);
+                double TotalInterestPaymentDouble = (MonthlyPaymentDouble * TermMonths);
+                double TotalPaymentDouble = TotalInterestPaymentDouble + Capital;
+                string TotalInterestPaymentString = TotalInterestPaymentDouble.ToString();
+                string TotalPaymentString = TotalPaymentDouble.ToString();
+                string message2 = "Over the lifetime of the mortgage you will repay £" + TotalPaymentString + ", of that £" + TotalInterestPaymentString + " is interest.";
+                System.Windows.MessageBox.Show(message2);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Please Select a Mortgage Type");
             }
         }
         public double InterestOnly(double Capital,double MonthlyDecimalIntrestRate)
@@ -52,6 +69,7 @@ namespace Mortgage_Repayment_Calculator
         }
         private double CapitalRepay(double Capital, double MothlyDecimalInterestRate, double TermMonths)
         {
+            // Uses formula from wikipedia http://en.wikipedia.org/w/index.php?title=Mortgage_calculator&diff=next&oldid=601962956
             double MonthlyCost = (Capital * MothlyDecimalInterestRate) / (1 - Math.Pow((1 + MothlyDecimalInterestRate),(-TermMonths)));
             return MonthlyCost;
         }
